@@ -1,12 +1,16 @@
-import Link from "next/link";
+"use client";
+import { useState } from "react";
 
 const ClientPage = () => {
+	const [counter, setCounter] = useState<number>(0);
 	return (
-		<div>
-			<h1 className='text-7xl'>Client Page</h1>
-			<Link href='/' className='text-2xl'>
-				Home Page
-			</Link>
+		<div className='flex flex-col items-center gap-3'>
+			<div className='text-6xl flex'>{counter}</div>
+			<button
+				className='btn btn-primary p-3 flex w-1/12'
+				onClick={() => setCounter(counter + 1)}>
+				Count
+			</button>
 		</div>
 	);
 };
