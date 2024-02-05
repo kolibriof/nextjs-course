@@ -1,15 +1,24 @@
+import DrinksList from "@/components/DrinksList";
 import axios from "axios";
-import Link from "next/link";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=b";
 
-const DrinksPage = async () => {
+export const fetchData = async () => {
 	const resp = await axios(url);
-	console.log(resp.data);
+	if (resp.status === 404) {
+		throw new Error("Failed to fetch data.");
+	}
+	return resp.data;
+};
+
+const DrinksPage = async () => {
+	const drinksData = await fetchData();
 
 	return (
-		<div>
-			<h1 className='text-7xl'>Drinks Page</h1>
+		<div className='grid grid-cols-2 gap-4'>
+			{drinksData.drinks.map((el: any) => {
+				return <DrinksList props={el} key={el.idDrink} />;
+			})}
 		</div>
 	);
 };
