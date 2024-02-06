@@ -1,12 +1,31 @@
-import Link from "next/link";
+import prisma from "@/utils/db";
 
-const PrismaExamplePage = () => {
+const prismaHandlers = async () => {
+	console.log("prisma example");
+
+	const allTasks = await prisma.task.findMany({
+		orderBy: {
+			createdAt: "desc",
+		},
+	});
+	return allTasks;
+};
+
+const PrismaExamplePage = async () => {
+	const tasks = await prismaHandlers();
+	if (tasks.length === 0) {
+		return <h2 className='mt-8 font-medium text-lg'>No tasks to show.</h2>;
+	}
 	return (
 		<div>
 			<h1 className='text-7xl'>Prisma Example Page</h1>
-			<Link href='/' className='text-2xl'>
-				Home Page
-			</Link>
+			{tasks.map((task) => {
+				return (
+					<h2 key={task.id} className='text-xl py-2'>
+						{task.content}
+					</h2>
+				);
+			})}
 		</div>
 	);
 };

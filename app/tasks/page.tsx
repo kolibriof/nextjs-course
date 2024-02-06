@@ -1,12 +1,11 @@
-import Link from "next/link";
+import TaskFormCustom from "@/components/TaskFormCustom";
+import TaskList from "@/components/TaskList";
 
 const TasksPage = () => {
 	return (
-		<div>
-			<h1 className='text-7xl'>Tasks Page</h1>
-			<Link href='/' className='text-2xl'>
-				Home Page
-			</Link>
+		<div className=' max-w-lg'>
+			<TaskFormCustom />
+			<TaskList />
 		</div>
 	);
 };
